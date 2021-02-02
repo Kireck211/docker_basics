@@ -1,20 +1,19 @@
 const pgp = require('pg-promise')();
 
 const configuration = {
-  host: 'localhost',
+  host: 'some-postgres',
   port: 5432,
-  database: 'my-database-name',
-  user: 'user-name',
-  password: 'user-password',
-  max: 30
+  database: 'postgres',
+  user: 'postgres',
+  password: 'mysecretpassword'
 };
 
 const db = pgp(configuration);
 
 function getProducts() {
-  return db.one('SELECT * FROM $1', 'products')
+  return db.any('SELECT * FROM products')
     .then(function (data) {
-      return Promise.resolve(data.value);
+      return Promise.resolve(data);
     })
     .catch(function (error) {
       return Promise.reject(error);
